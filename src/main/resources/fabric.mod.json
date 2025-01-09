@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "petpet",
+  "version": "${version}",
+  "name": "PetPet",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/petpet/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "dev.mg95.petpet.PetPet"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
