@@ -31,7 +31,6 @@ public class PetPet implements ModInitializer {
     private HashMap<Key, PettingSession> pettingSessions = new HashMap<>();
     private HashMap<Key, Long> totalPettingTimes = new HashMap<>();
     private int ticksSinceLastCheck = 0;
-    private boolean checkingPets = false;
 
     @Override
     public void onInitialize() {
@@ -76,15 +75,13 @@ public class PetPet implements ModInitializer {
             ticksSinceLastCheck = 0;
             var time = System.currentTimeMillis();
 
-            checkingPets = true;
-            for (var key : pettingSessions.keySet()) {
+            for (var key : new ArrayList<>(pettingSessions.keySet())) {
                 if (time - pettingSessions.get(key).lastPet > 1000) {
                     totalPettingTimes.putIfAbsent(key, 0L);
                     totalPettingTimes.put(key, totalPettingTimes.get(key) + pettingSessions.get(key).lastPet - pettingSessions.get(key).startTime);
                     pettingSessions.remove(key);
                 }
             }
-            checkingPets = false;
 
             var serializableMap = new HashMap<String, Long>();
             for (var key : totalPettingTimes.keySet()) {
@@ -126,7 +123,6 @@ public class PetPet implements ModInitializer {
     }
 
     private void handleSession(PlayerEntity petGiver, Entity petTaker) {
-        if (checkingPets) return;
         if (!petTaker.isPlayer()) return;
 
         var key = new Key(petGiver.getUuid(), petTaker.getUuid());
