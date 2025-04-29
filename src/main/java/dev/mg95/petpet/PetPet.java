@@ -2,6 +2,7 @@ package dev.mg95.petpet;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
@@ -12,7 +13,7 @@ public class PetPet implements ModInitializer {
     @Override
     public void onInitialize() {
         UseEntityCallback.EVENT.register((playerEntity, world, hand, entity, entityHitResult) -> {
-            if (playerEntity.isSpectator() || !playerEntity.getMainHandStack().isEmpty() || !playerEntity.isSneaking())
+            if (playerEntity.isSpectator() || !playerEntity.getMainHandStack().isEmpty() || !playerEntity.isSneaking() || entity instanceof ItemFrameEntity)
                 return ActionResult.PASS;
 
             playerEntity.swingHand(Hand.MAIN_HAND, true);
